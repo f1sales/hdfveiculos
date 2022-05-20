@@ -15,7 +15,31 @@ RSpec.describe F1SalesCustom::Email::Parser do
     let(:parsed_email) { described_class.new(email).parse }
 
     it 'contains lead website a source name' do
-      expect(parsed_email)
+      expect(parsed_email[:source][:name]).to eq('Website')
+    end
+
+    it 'contains name' do
+      expect(parsed_email[:customer][:name]).to eq('Nilma Teixeira de Souza')
+    end
+
+    it 'contains phone' do
+      expect(parsed_email[:customer][:phone]).to eq('31975733529')
+    end
+
+    it 'contains email' do
+      expect(parsed_email[:customer][:email]).to eq('tnilma3@gmail.com')
+    end
+
+    it 'contains CPF' do
+      expect(parsed_email[:customer][:cpf]).to eq('5293810600')
+    end
+
+    it 'contains link page' do
+      expect(parsed_email[:product][:link]).to eq('https://hdfveiculos.com.br/carros/chevrolet-celta-1-0-2004/')
+    end
+
+    it 'contains message' do
+      expect(parsed_email[:message]).to eq('Valor de entrada: R$ 6.000 - Possui CNH: Não')
     end
   end
 end
