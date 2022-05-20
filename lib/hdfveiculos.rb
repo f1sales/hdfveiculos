@@ -21,19 +21,19 @@ module Hdfveiculos
       source = F1SalesCustom::Email::Source.all[0]
       
       {
-       source: {
-         name: source[:name]
-       },
-       customer: {
-         name: parsed_email['nome'],
-         phone: parsed_email['telefone'],
-         email: parsed_email['email'].split.first,
-         cpf: parsed_email['n_do_cpf'].split.first
-       },
-       product: {
-         link: parsed_email['page_url'].split.first
-       },
-       message: "Valor de entrada: R$ #{parsed_email['qual_valor_da_entrada']} - Possui CNH: #{parsed_email['possui_cnh']}"
+        source: {
+          name: source[:name]
+        },
+        customer: {
+          name: parsed_email['nome'],
+          phone: parsed_email['telefone'],
+          email: parsed_email['email'].split.first,
+          cpf: parsed_email['n_do_cpf'].split.first
+        },
+        product: {
+          link: parsed_email['page_url'].split.first
+        },
+        message: "Valor de entrada: R$ #{parsed_email['qual_valor_da_entrada']} - Possui CNH: #{parsed_email['possui_cnh']}"
       }
     end
   end
