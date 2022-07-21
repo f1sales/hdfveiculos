@@ -5,6 +5,7 @@ require "f1sales_helpers"
 
 module Hdfveiculos
   class Error < StandardError; end
+
   class F1SalesCustom::Email::Source
     def self.all
       [
@@ -15,6 +16,7 @@ module Hdfveiculos
       ]
     end
   end
+
   class F1SalesCustom::Email::Parser
     def parse
       parsed_email = @email.body.colons_to_hash(/(Nome|Telefone|Email|Data de Nascimento|Page URL|Nº do CPF:|Possui CNH?|Qual valor da entrada?).*?:/, false)
