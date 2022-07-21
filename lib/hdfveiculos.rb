@@ -33,7 +33,8 @@ module Hdfveiculos
           cpf: parsed_email['n_do_cpf'].split.first
         },
         product: {
-          link: parsed_email['page_url'].split.first
+          link: parsed_email['page_url'].split.first,
+          name: ''
         },
         message: "Valor de entrada: R$ #{parsed_email['qual_valor_da_entrada']} - Possui CNH: #{parsed_email['possui_cnh']}"
       }
