@@ -9,7 +9,7 @@ module Hdfveiculos
     def self.all
       [
         {
-          email_id: 'website',
+          email_id: 'contato',
           name: 'Website'
         }
       ]
@@ -19,7 +19,7 @@ module Hdfveiculos
     def parse
       parsed_email = @email.body.colons_to_hash(/(Nome|Telefone|Email|Data de Nascimento|Page URL|Nº do CPF:|Possui CNH?|Qual valor da entrada?).*?:/, false)
       source = F1SalesCustom::Email::Source.all[0]
-      
+
       {
         source: {
           name: source[:name]
