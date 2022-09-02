@@ -1,7 +1,7 @@
-require_relative "hdfveiculos/version"
-require "f1sales_custom/source"
-require "f1sales_custom/parser"
-require "f1sales_helpers"
+require_relative 'hdfveiculos/version'
+require 'f1sales_custom/source'
+require 'f1sales_custom/parser'
+require 'f1sales_helpers'
 
 module Hdfveiculos
   class Error < StandardError; end
