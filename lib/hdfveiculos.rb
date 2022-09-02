@@ -19,7 +19,8 @@ module Hdfveiculos
 
   class F1SalesCustom::Email::Parser
     def parse
-      parsed_email = @email.body.colons_to_hash(/(Nome|Telefone|Email|Data de Nascimento|Page URL|Nº do CPF:|Possui CNH?|Qual valor da entrada?).*?:/, false)
+      # byebug
+      parsed_email = @email.body.colons_to_hash(/(Nome|Telefone|Celular|Email|Data de Nascimento|Data de nascimento|Qual o veículo de interesse?|Page URL|CPF|Nº do CPF:|Possui CNH?|Qual valor da entrada?|Valor de entrada).*?:/, false)
       source = F1SalesCustom::Email::Source.all[0]
 
       {
@@ -28,15 +29,15 @@ module Hdfveiculos
         },
         customer: {
           name: parsed_email['nome'],
-          phone: parsed_email['telefone'],
-          email: parsed_email['email'].split.first,
-          cpf: parsed_email['n_do_cpf'].split.first
+          phone: parsed_email['telefone'] || parsed_email['celular'],
+          email: parsed_email['email']&.split&.first || '',
+          cpf: parsed_email['n_do_cpf']&.split&.first || parsed_email['cpf']
         },
         product: {
-          link: parsed_email['page_url'].split.first,
-          name: ''
+          link: parsed_email['page_url']&.split&.first,
+          name: parsed_email['qual_o_veculo_de_interesse'] || ''
         },
-        message: "Valor de entrada: R$ #{parsed_email['qual_valor_da_entrada']} - Possui CNH: #{parsed_email['possui_cnh']}"
+        message: "Valor de entrada: R$ #{parsed_email['qual_valor_da_entrada'] || parsed_email['valor_de_entrada']} - Possui CNH: #{parsed_email['possui_cnh']&.split("\n")&.first}"
       }
     end
   end
