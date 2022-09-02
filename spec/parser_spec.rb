@@ -46,4 +46,49 @@ RSpec.describe F1SalesCustom::Email::Parser do
       expect(parsed_email[:product][:name]).to eq('')
     end
   end
+
+  context 'when came from landing page' do
+    let(:email) do
+      email = OpenStruct.new
+      email.to = [email: 'website@hdfveiculos.f1sales.net']
+      email.subject = '[SPAM] New message from &quot;HDF Veculos&quot;'
+      email.body = "Nome: Raphael Michelangelo\nCelular: 12997920040\nQual o veículo de interesse? : Celta\nCPF: 44489212306\nData de nascimento: 26/042004\nValor de entrada: 500\nPossui CNH?: Tô tirando\n\n---\n\nDate: 29/08/2022\nTime: 09:15\nPage URL:\nhttps://hdfveiculos.com.br/lp-carro-novo/?gclid=CjwKCAjwx7GYBhB7EiwA0d8oe2BX6H74XCV_TLwiFFvHAvCORFbwWoB6WtK6BkogksNw-xvYBJv-pBoCMXcQAvD_BwE\nUser Agent: Mozilla/5.0 (Linux; Android 9; Redmi S2) AppleWebKit/537.36\n(KHTML, like Gecko) Chrome/104.0.0.0 Mobile Safari/537.36\nRemote IP: 45.234.41.67\nPowered by: Elementor"
+
+      email
+    end
+
+    let(:parsed_email) { described_class.new(email).parse }
+
+    it 'contains lead website a source name' do
+      expect(parsed_email[:source][:name]).to eq('Website')
+    end
+
+    it 'contains name' do
+      expect(parsed_email[:customer][:name]).to eq('Raphael Michelangelo')
+    end
+
+    it 'contains phone' do
+      expect(parsed_email[:customer][:phone]).to eq('12997920040')
+    end
+
+    it 'contains email' do
+      expect(parsed_email[:customer][:email]).to eq('')
+    end
+
+    it 'contains CPF' do
+      expect(parsed_email[:customer][:cpf]).to eq('44489212306')
+    end
+
+    it 'contains link page' do
+      expect(parsed_email[:product][:link]).to eq('https://hdfveiculos.com.br/lp-carro-novo/?gclid=CjwKCAjwx7GYBhB7EiwA0d8oe2BX6H74XCV_TLwiFFvHAvCORFbwWoB6WtK6BkogksNw-xvYBJv-pBoCMXcQAvD_BwE')
+    end
+
+    it 'contains message' do
+      expect(parsed_email[:message]).to eq('Valor de entrada: R$ 500 - Possui CNH: Tô tirando')
+    end
+
+    it 'contains product name' do
+      expect(parsed_email[:product][:name]).to eq('Celta')
+    end
+  end
 end
