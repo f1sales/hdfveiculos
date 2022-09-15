@@ -10,7 +10,11 @@ module Hdfveiculos
     def self.all
       [
         {
-          email_id: 'contato' || 'website',
+          email_id: 'contato',
+          name: 'Website'
+        },
+        {
+          email_id: 'website',
           name: 'Website'
         }
       ]
